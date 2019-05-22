@@ -73,7 +73,7 @@
 \maketitle
 
 \begin{abstract}
-Graph embedding has been proved extremely useful to learn low-dimensional feature representations from a graph. These feature representations can be used for a variety of prediction tasks from node classification to link prediction. However, existing graph embedding methods do not consider users' privacy in order to prevent inference attacks. That is, adversaries could infer users' sensitive information by analyzing node representations learned from a graph embedding algorithm. In this paper, we propose Adversarial Privacy Graph Embedding (APGE), a graph adversarial training framework that integrates the squeezing and purging mechanisms to remove users' private information from learned node representations. Extensive experiments on real-world social network datasets demonstrate the superior performance of APGE compared to existing graph embedding methods. The proposed method preserves the structural information and utility attributes of a social network while concealing users' private attributes from inference attacks.
+Graph embedding has been proved extremely useful to learn low-dimensional feature representations from a graph. These feature representations can be used for a variety of prediction tasks from node classification to link prediction. However, existing graph embedding methods do not consider users' privacy in order to prevent inference attacks. That is, adversaries could infer users' sensitive information by analyzing node representations learned from a graph embedding algorithm. In this paper, we propose Adversarial Privacy Graph Embedding (APGE), a graph adversarial training framework that integrates the disentangling and purging mechanisms to remove users' private information from learned node representations. Extensive experiments on real-world social network datasets demonstrate the superior performance of APGE compared to existing graph embedding methods. The proposed method preserves the structural information and utility attributes of a social network while concealing users' private attributes from inference attacks. To the best of our knowledge, this is the first work considering preserving privacy in social network embedding. The code of this work is available at https://github.com/uJ62JHD/Privacy-Preserving-Social-Network-Embedding.
 \end{abstract}
 
 
@@ -96,9 +96,9 @@ On one hand, social networks (e.g. Facebook, Twitter, WeChat) have became import
 On the other hand, existing privacy protection methods on social networks prevent inference attacks by pruning the graph data directly~\citep{cai2018collective,he2018latent}. The subsequent graph embedding on such preprocessed networks will induce suboptimal performance for privacy protection and data utility reservation. This is because:
 (1) Graph embedding and privacy protection are decoupled in this process and limit the expressiveness of the model. (2) Existing methods have limited options to preprocess users' attributes. For example, we can either swap gender attribute of a user or delete it from the node completely to conceal users' private information. With graph embedding, users' gender information will be embedded in a continuous space and therefore we can fine-tune the latent space through gradient updates to protect users' privacy precisely. (3) Traditional social network privacy-preserving methods only consider the first-order friendship, while graph embedding concerns global graph topology and local node attributes. Therefore, high-order friendship can also be used to infer users' sensitive information. For instance, two users don't have direct connections, but they may have shared friends; if only the first-order friendship is utilized, these two users might be considered irrelevant; but they are closely related to each other due to the high-order friendship, which means their private attributes might be similar with a high probability.
 
-Therefore, in this paper we propose a privacy-spreserving social network embedding framework, which integrates graph embedding and privacy protection into an end-to-end pipeline to overcome the aforementioned limitations. As we will demonstrate, our method enables social network websites to release their privacy-preserved node embedding to the third parties with reduced risks of privacy concern. The contributions of this paper are
+Therefore, in this paper we propose a privacy-preserving social network embedding framework, which integrates graph embedding and privacy protection into an end-to-end pipeline to overcome the aforementioned limitations. As we will demonstrate, our method enables social network websites to release their privacy-preserved node embedding to the third parties with reduced risks of privacy concern. The contributions of this paper are
 \begin{itemize}
-\item To the best of our knowledge, this is the first social network embedding algorithm that integrates privacy protection into graph convolution networks (GCN).
+\item To the best of our knowledge, this is the first social network embedding algorithm considering privacy preserving.
 \item We propose Adversarial Privacy Graph Embedding (APGE), an adversarial training based graph embedding algorithm that preserves users' privacy in an end-to-end graph convolution pipeline.
 \item Extensive experiments on social network datasets demonstrate the superior performance of our method over previous approaches in terms of privacy protection and users' utility reservation.
 \end{itemize}
@@ -239,7 +239,7 @@ When we train the model, we update the attacker and obfuscator alternately until
 
 %======================================
 \subsection{Adversarial Privacy Graph Embedding}
-The disentangling and purging mechanisms we discussed above preserve the privacy information at the different stages of the training: the former is at the input of the decoder, while the latter at the output of the decoder, and they work complementary to each other. Therefore, we integrate both mechanisms into one framework ``Adversarial Privacy Graph Embedding (APGE)" to jointly protect users' privacy, with the model shown in Fig. \ref{Fig:ASPGE}. On the one hand, the framework of APGE is the same as APPGE that consists of an obfuscator and an attacker. On the other hand, the architecture of the obfuscator is the same as APDGE. Significantly, the attacker launches an inference attack on the latent code matrix $\mathbf{Z}$ rather than the latent code $\mathbf{Z^+}$, which is the concatenation of $Z$ and privacy label encoding.
+The disentangling and purging mechanisms we discussed above preserve the privacy information at the different stages of the training: the former is at the input of the decoder, while the latter at the output of the decoder, and they work complementary to each other. Therefore, we integrate both mechanisms into one framework ``Adversarial Privacy Graph Embedding (APGE)" to jointly protect users' privacy, with the model shown in Fig. \ref{Fig:APDGE}. On the one hand, the framework of APGE is the same as APPGE that consists of an obfuscator and an attacker. On the other hand, the architecture of the obfuscator is the same as APDGE. Significantly, the attacker launches an inference attack on the latent code matrix $\mathbf{Z}$ rather than the latent code $\mathbf{Z^+}$, which is the concatenation of $Z$ and privacy label encoding.
 
 The attacker and obfuscator of APGE can be optimized by alternating SGD in two stages. Firstly, for the attacker, we minimize the prediction error of the private attribute by Eq.~\ref{Eq:LossAttr}. Secondly, for the obfuscator, we update the model in three steps as shown in APDGE.
 
@@ -250,7 +250,7 @@ The attacker and obfuscator of APGE can be optimized by alternating SGD in two s
   \includegraphics[width=0.5\linewidth]{APGE.pdf}
   %\fbox{\rule[-.5cm]{0cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
   \caption{Adversarial Privacy Graph Embedding}
-  \label{Fig:ASPGE}
+  \label{Fig:APDGE}
 \end{figure}
 
 
@@ -265,7 +265,7 @@ We conduct experiments on 2 real-world social network datasets:
 
 
 The following baselines are adopted in the performance comparison.
-(1) \textbf{GAE} \citep{kipf2016variational} learns network representation by autoencoder where encoder is graph convolutional network and decoder consists of inner product to reconstruct adjacency matrix and softmax layer to predict utility attributes.
+(1) \textbf{GAE} \citep{kipf2016variational} learns network representation by autoencoder where encoder is graph convolutional network and decoder consists of inner product to reconstruct adjacency matrix and softmax function to predict utility attributes.
 (2) \textbf{GAE\_RM} \citep{kipf2016variational} has a framework the same as that of GAE. Since GAE\_RM does not consider privacy protection, the columns corresponding to the sensitive attributes should be removed from the input feature matrix $\mathbf{X}$.
 (3) \textbf{CDSPIA} \citep{cai2018collective} is a collective data-sanitization method to resist inference attacks by deleting or perturbing users' attributes and linkages which are closely related to privacy. We use CDSPIA to sanitize the social network dataset and then embed the graph data processed via GAE.
 
@@ -280,10 +280,10 @@ All the methods embed the social networks to a 64-dimensional space. Particularl
 We measure the performance of the proposed models in terms of utility and privacy.
 
 
-Utility is computed as the prediction accuracy of link and utility attribute from the embedding results of \textbf{Yale} and \textbf{Rochester} social network datasets.
+Utility is computed as the prediction accuracy of link and utility attributes from the embedding results of Yale and Rochester social network datasets.
 For link prediction, 85\% edges are used as the training set, and 5\% and 10\% edges are respectively used as the true samples of validation set and the test set. Also, the same size false samples of the validation set and the test set are constructed by randomly selecting pairs of unconnected nodes.
 According to Eq.~\ref{Eq:innerP}, the probability of edge existence is computed to distinguish the true or false samples. The area under the ROC curve (AUC) and average precision (AP) of link prediction of Yale and Rochester are shown  in Table~\ref{Tab:Yale} and Table~\ref{Tab:Rochester}.
-For utility attribute prediction, multi-layer perceptron (MLP) is utilized to predict the utility attribute, and the 5-fold cross-validation accuracy of utility attribute prediction is reported in Table~\ref{Tab:Yale} and Table~\ref{Tab:Rochester}.
+For utility attribute prediction, multi-layer perceptron (MLP) is utilized to predict the utility attributes, and the 5-fold cross-validation accuracy of utility attribute prediction is reported in Table~\ref{Tab:Yale} and Table~\ref{Tab:Rochester}.
 
 
 
@@ -292,9 +292,8 @@ Three mainstream classifiers, including logistic regression (LR), MLP, and SVM, 
 
 The performance of GAE\_RM indicates that even if the sensitive attribute is deleted from the published data, the attacker is still able to infer the user's privacy based on the inherent relation between the sensitive attribute and the released data.
 CDSPIA can protect privacy more than GAE\_RM does but loses more utility information in its embedding results.
-Compared with CDSPIA, the ability of ASPGE and APPGE to protect privacy is comparable while the ability of ASPGE and APPGE to predict link and utility attribute is better.
-From the comparison, APPGE is more suitable to preventing LR attack, ASPGE can better defend against the attack via MLP and SVM better.  APGE the is the integration of APPGE and ASPGE owns the strongest ability to protect user's privacy.  For all the three proposed models, the prediction accuracy of private attribute of {\bf Yale} is reduced significantly, and the prediction accuracy of private attribute of {\bf Rochester} is close to that of random-guess.
-%Meanwhile, the ability of APGE capturing the link and unsensitive attributes information does not decrease significantly.
+Compared with CDSPIA, the ability of APDGE and APPGE to protect privacy is comparable while the ability of APDGE and APPGE to capture link and utility attribute is better.
+From the comparison, APPGE is more suitable to preventing LR attack, APDGE can defend against the attack via MLP and SVM better.  APGE which is the integration of APPGE and APDGE owns the strongest ability to protect user's privacy.  With the embedding result of APGE, the prediction accuracy of private attribute of {\bf Yale} is reduced significantly, and the prediction accuracy of private attribute of {\bf Rochester} is close to that of random-guess. Meanwhile, the ability of APGE capturing the link and utility attributes information does not decrease significantly.
 %
 \begin{table}
 \small
@@ -310,7 +309,7 @@ From the comparison, APPGE is more suitable to preventing LR attack, ASPGE can b
     GAE & 93.1 $\pm$ 0.2 &93.6$\pm$ 0.2     &94.3 $\pm$0.3  &91.9$\pm$ 0.4  &94.7 $\pm$0.1 &94.2$\pm$  0.2 &94.0$\pm$ 0.3\\
     GAE\_RM    &93.0 $\pm$ 0.1 &93.4$\pm$ 0.1  &94.2 $\pm$0.2   &91.6$\pm$ 0.4  &91.0$\pm$ 0.2 &91.0 $\pm$0.2 &91.0$\pm$ 0.1   \\
     CDSPIA     &90.4 $\pm$  0.1    &90.0 $\pm$0.2  &94.2$\pm$ 0.1  &87.3$\pm$ 0.4 &87.9$\pm$ 0.2 &90.2 $\pm$0.2 &88.7$\pm$ 0.3 \\
-    ASPGE     &91.4 $\pm$  0.2     & 91.4 $\pm$0.2  &92.5$\pm$ 0.4  &90.8$\pm$ 0.6 &81.3$\pm$ 0.6  &83.9$\pm$ 0.7 &73.7$\pm$ 0.7 \\
+    APDGE     &91.4 $\pm$  0.2     & 91.4 $\pm$0.2  &92.5$\pm$ 0.4  &90.8$\pm$ 0.6 &81.3$\pm$ 0.6  &83.9$\pm$ 0.7 &73.7$\pm$ 0.7 \\
     APPGE    &92.7 $\pm$  0.2   &92.9 $\pm$0.2  &93.7$\pm$ 0.1  &90.2$\pm$ 0.2 &79.4$\pm$ 1.4 &88.7$\pm$ 0.2 &82.9$\pm$ 0.7\\
     APGE     &88.6   $\pm $0.5  &88.6$\pm$ 0.6  &83.8$\pm$ 0.9  &88.3$\pm$ 0.8 &\textbf{41.4$\pm$ 1.6} &\textbf{53.4$\pm$ 2.0} &\textbf{38.6$\pm$ 1.3}\\
     \bottomrule
@@ -331,7 +330,7 @@ From the comparison, APPGE is more suitable to preventing LR attack, ASPGE can b
     GAE   &93.3 $\pm$ 0.2  &93.8 $\pm$ 0.3 &98.0 $\pm$ 0.2 &96.8 $\pm$ 0.3 &74.9 $\pm$ 0.9 &78.3 $\pm$ 0.3 &72.8 $\pm$ 1.0\\
     GAE\_RM  &93.6 $\pm$  0.1 &94.1 $\pm$ 0.1 &98.4 $\pm$ 0.5 &97.5 $\pm$  0.3 &67.5 $\pm$ 0.7 &72.1 $\pm$ 0.4 &67.4 $\pm$ 1.0\\
     CDSPIA  &92.2 $\pm$ 0.1 &92.3 $\pm$ 0.3 &96.3 $\pm$  0.3 &93.8 $\pm$ 0.2 &57.4 $\pm$ 0.7 &63.5 $\pm$ 0.4 &56.7 $\pm$ 1.3\\
-    ASPGE     &91.4 $\pm$ 0.3 &91.4 $\pm$ 0.3 &96.6 $\pm$ 0.5 &95.4 $\pm$ 0.3 &55.1 $\pm$ 0.7 &59.3  $\pm$ 0.4 &54.2 $\pm$ 0.2\\
+    APDGE     &91.4 $\pm$ 0.3 &91.4 $\pm$ 0.3 &96.6 $\pm$ 0.5 &95.4 $\pm$ 0.3 &55.1 $\pm$ 0.7 &59.3  $\pm$ 0.4 &54.2 $\pm$ 0.2\\
     APPGE     &93.6 $\pm$ 0.2 &94.1 $\pm$ 0.2 &97.3  $\pm$ 0.7 &96.9 $\pm$ 0.2  &\textbf{48.2 $\pm$  0.2}   &70.5$\pm$  0.3 &55.2 $\pm$ 0.9\\
     APGE     &91.1  $\pm$ 0.2 &91.1 $\pm$ 0.2 &96.7 $\pm$ 0.3 &95.6 $\pm$ 0.4 &52.4 $\pm$ 0.6 &\textbf{59.2 $\pm$ 0.5} &\textbf{53.0 $\pm$ 0.4}\\
     \bottomrule
@@ -339,15 +338,15 @@ From the comparison, APPGE is more suitable to preventing LR attack, ASPGE can b
 \end{table}
 
 
-Moreover, to illustrate the trade off between utility and privacy, the ratio of utility (that is the total prediction accuracy of link and utility attribute) to privacy is analyzed via Fig.~\ref{fig:u_p}. The results of ``utility/privacy'' show that APGE obtains the best performance when both graph embedding and privacy protection are taken into account.
+Moreover, to illustrate the trade off between utility and privacy, the ratio of utility (that is the total prediction accuracy of link and utility attributes) to privacy is analyzed via Fig.~\ref{fig:u_p}. The results of "utility/privacy'' show that APGE obtains the best performance when both utility reserving and privacy protection are taken into account.
 %
 \begin{figure}[!ht]
      \subfloat[utilty/privacy on Yale\label{Classcial AAE}]{%
-       \includegraphics[width=0.48\textwidth]{yaleu_p.eps}
+       \includegraphics[width=0.48\textwidth]{YaleU_P.pdf}
      }
      \hfill
      \subfloat[utilty/privacy on Rochestor\label{Supervised AAE}]{%
-       \includegraphics[width=0.48\textwidth]{rochu_p.eps}
+       \includegraphics[width=0.48\textwidth]{RochU_P.pdf}
      }
      \caption{evaluation on the trade off between utility and privacy}
      \label{fig:u_p}
@@ -356,17 +355,17 @@ Moreover, to illustrate the trade off between utility and privacy, the ratio of 
 
 %======================================
 \subsection{Impact of Parameter}
-With various dimensions of hidden code $Z'$ in \textbf{APGE} on Rochester, the results of privacy and utility are presented in Fig.~\ref{fig:Impact}. When the dimension of hidden code is increased, more information of link and utility attribute are embedded, and thus the corresponding prediction accuracy can be enhanced. On the other hand, a higher dimension of hidden code also embeds more private information, leading to a higher privacy prediction accuracy and a lower privacy prediction error.
+With various dimensions of hidden code $\mathbf{z}'_i$ in APGE on \textbf{Yale}, the results of privacy and utility are presented in Fig.~\ref{fig:Impact}. When the dimension of hidden code is increased, more information of link and utility attribute are embedded. On the other hand, a higher dimension of hidden code also embeds more private information, leading to a lower probability of preventing inference attack successfully. Here, we define predicting false privacy attribute as preventing attack successfully.
 %
 \begin{figure}[!ht]
      \subfloat[Impact on Utility\label{subfig-1:dummy}]{%
-       \includegraphics[width=0.48\textwidth]{impact1.eps}
+       \includegraphics[width=0.48\textwidth]{impact_U.pdf}
      }
      \hfill
      \subfloat[Impact on privacy\label{subfig-2:dummy}]{%
-       \includegraphics[width=0.48\textwidth]{impact2.eps}
+       \includegraphics[width=0.48\textwidth]{impact_P.pdf}
      }
-     \caption{Impact of the code's dimension }
+     \caption{Impact of the hidden code's dimension }
      \label{fig:Impact}
    \end{figure}
 
@@ -377,27 +376,27 @@ With various dimensions of hidden code $Z'$ in \textbf{APGE} on Rochester, the r
 \section{Related work}
 
 \textbf{Graph Embedding Method.}\\
-DeepWalk~\citep{perozzi2014deepwalk} is the early work to learn graph representation by generating the node context via random walk and mapping node to vectors based on skip-gram~\citep{mikolov2013efficient}. 
-Node2vec~\citep{grover2016node2vec} exploits a new method to generate node context with considering both local and global structure information and then embeds graph using DeepWalk. 
+DeepWalk~\citep{perozzi2014deepwalk} is the early work to learn graph representation by generating the node context via random walk and mapping node to vectors based on skip-gram~\citep{mikolov2013efficient}.
+Node2vec~\citep{grover2016node2vec} exploits a new method to generate node context with considering both local and global structure information and then embeds graph using DeepWalk.
 The above methods just utilize topology information, and some works have been proposed to improve embedding performance taking into account both the structure and attribute information.
-TirDNR~\citep{pan2016tri} combines DeepWalk and Doc2Vec~\citep{dai2015document} to learn the inner-node relationship, node-word correspondence, and word-label correlation. 
-UPP-SNE~\citep{zhang2017user} uses the attribute matrix of social network as input and the node context as label to supervised training model. 
-Different from skip-gram architecture, GAE~\citep{kipf2016variational} is a graph convolutional network via an approximation of spectral graph convolutions for learning the graph representation and outperforms skip-gram architecture. 
+TirDNR~\citep{pan2016tri} combines DeepWalk and Doc2Vec~\citep{dai2015document} to learn the inner-node relationship, node-word correspondence, and word-label correlation.
+UPP-SNE~\citep{zhang2017user} uses the attribute matrix of social network as input and the node context as label to supervised training model.
+Different from skip-gram architecture, GAE~\citep{kipf2016variational} is a graph convolutional network via an approximation of spectral graph convolutions for learning the graph representation and outperforms skip-gram architecture.
 Recently, ARGA~\citep{pan2018adversarially} is proposed to add regularization to GAE via an adversarial framework.
 Unfortunately, these above graph embedding methods do not consider privacy preservation; that is, attacker can infer the user's sensitive attribute from the embedding results.
 
 
 
 \textbf{Privacy Preservation in Social Network against Inference Attack.}\\
-Jia and Gong~\citep{jia2018attriguard} build a set of noise via adversarial machine learning and randomly select the noise to mislead the inference attacker. However, they only manipulate the user's attribute and ignore the linkage, and thus their method cannot resist the inference attack utilizing topology information. 
-Cai {\em et al.}~\citep{cai2018collective} first propose an inference attack method with the mixture of non-sensitive attribute and link relationship and then design a privacy-preserving method by removing or perturbing user's attributes and links that are closely related to private attribute. He {\em et al.}~\citep{he2018latent} obtain the data-sanitization strategy by solving an optimization problem, which can balance the trade off between utility and privacy. 
+Jia and Gong~\citep{jia2018attriguard} build a set of noise via adversarial machine learning and randomly select the noise to mislead the inference attacker. However, they only manipulate the user's attribute and ignore the linkage, and thus their method cannot resist the inference attack utilizing topology information well.
+Cai {\em et al.}~\citep{cai2018collective} first propose an inference attack method with the mixture of non-sensitive attribute and link relationship and then design a privacy-preserving method by removing or perturbing user's attributes and links that are closely related to private attribute. He {\em et al.}~\citep{he2018latent} obtain the data-sanitization strategy by solving an optimization problem, which can balance the trade off between utility and privacy.
 In these prior works, privacy is preserved by directly manipulating graph data, which decouples the processes of privacy protection and graph embedding and is not suitable to implement privacy-preserving embedding on social networks.
 
 
 
 %======================================
 \section{Conclusion}
-In this paper, we proposed a novel social network embedding framework, which can protect user's privacy (i.e., sensitive attribute) against the inference attack while remaining the user's utility information (including link and utility attribute). The proposed framework not only squeezes privacy information via embedding node in low-dimensional space but also perturbs embedding vector to confuse attackers for privacy protection. Comprehensive experiment results validate that our proposed framework \textbf{APGE} outperforms the state-of-the-art in terms of privacy protection and utility information embedding.
+In this paper, we proposed a novel social network embedding framework, which can protect user's privacy (i.e., sensitive attribute) against the inference attack while remaining the user's utility information (including link and utility attribute). The proposed framework not only disentangles privacy information via  incorporating the privacy label to the decoder of the autoencoder architecture but also purging embedding vector to confuse attackers in adversarial network. Comprehensive experiment results validate that our proposed framework \textbf{APGE} outperforms the state-of-the-art in terms of social network privacy preserving embedding.
 
 \bibliographystyle{unsrt}
 \bibliography{bibfile}
