@@ -17,7 +17,7 @@ Shirui Pan .et al, Adversarially Regularized Graph Autoencoder for Graph Embeddi
 * numpy
 
 
-## Run from
+## Run the demo
 
 ```bash
 cd APGE
