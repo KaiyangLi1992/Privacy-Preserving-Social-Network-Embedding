@@ -4,26 +4,24 @@ Adversarial Privacy Graph Embedding (APGE)
 This is a TensorFlow implementation of the Adversarial Privacy Graph Embedding (APGE) model as described in our paper.
 
 We borrowed part of code from T. N. Kipf, M. Welling, Variational Graph Auto-Encoders [https://github.com/tkipf/gae] and 
-Shirui Pan .et al, Adversarially Regularized Graph Autoencoder for Graph Embedding [https://github.com/Ruiqi-Hu/ARGA]
+Shirui Pan .et al, Adversarially Regularized Graph Autoencoder for Graph Embedding [https://github.com/Ruiqi-Hu/ARGA].
 
 
-## Installation
-
-```bash
-pip install -r requirements.txt
-```
 
 ## Requirements
-* TensorFlow (1.0 or later)
-* python 2.7
+* TensorFlow (1.8.0 or later)
+* python 3.5
 * networkx
 * scikit-learn
 * scipy
+* numpy
+
 
 ## Run from
 
 ```bash
-python run.py
+cd APGE
+python train.py
 ```
 
 ## Data
@@ -39,19 +37,7 @@ In this example, we load citation network data (Cora, Citeseer or Pubmed). The o
 ## Models
 
 You can choose between the following models: 
-* `arga_ae`: Adversarially Regularised Graph Auto-Encoder
-* `arga_vae`: Adversarially Regularised Variational Graph Auto-Encoder 
+* `APGE`: Adversarial Privacy Graph Embedding
+* `ADPGE`: Adversarial Privacy-Disentangled Graph Embedding
+* `APPGE`: Adversarially Privacy-Purged Variational Graph Auto-Encoder 
 
-## Cite
-
-Please cite following papers if you use this code in your own work:
-
-```
-@inproceedings{pan2018adversarially,
-  title={Adversarially Regularized Graph Autoencoder for Graph Embedding.},
-  author={Pan, Shirui and Hu, Ruiqi and Long, Guodong and Jiang, Jing and Yao, Lina and Zhang, Chengqi},
-  booktitle={IJCAI},
-  pages={2609--2615},
-  year={2018}
-}
-```
