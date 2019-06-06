@@ -42,15 +42,15 @@ class Model(object):
     
 
 class APPGE(Model):
-    def __init__(self, placeholders, num_features, features_nonzero, **kwargs):
+    def __init__(self, placeholders, num_features, features_nonzero,dim_attr,**kwargs):
         super(APPGE, self).__init__(**kwargs)
-
         self.inputs = placeholders['features']
         self.input_dim = num_features
         self.features_nonzero = features_nonzero
         self.adj = placeholders['adj']
         self.dropout = placeholders['dropout']
         self.sample = placeholders['sample']
+        self.dim_attr = dim_attr
         self.build()
 
 
@@ -84,9 +84,9 @@ class APPGE(Model):
             self.reconstructions = InnerProductDecoder(input_dim=FLAGS.hidden2,
                                           act=lambda x: x,
                                           logging=self.logging)(self.embeddings)
-            self.attr0_preds = tf.layers.dense(inputs=self.embeddings, units=5)
+            self.attr0_preds = tf.layers.dense(inputs=self.embeddings, units=self.dim_attr[0])
 
-            self.attr1_preds = tf.layers.dense(inputs=self.embeddings, units=2)
+            self.attr1_preds = tf.layers.dense(inputs=self.embeddings, units=self.dim_attr[1])
 
 
             #print(tf.get_variable_scope().name)
@@ -94,4 +94,4 @@ class APPGE(Model):
 
         with tf.variable_scope("privacy_classification"):
             #self.sensi_attr_ =  tf.layers.dense(inputs=self.embeddings, units=100)
-            self.privacy_preds = tf.layers.dense(inputs=self.embeddings, units=6)
+            self.privacy_preds = tf.layers.dense(inputs=self.embeddings, units=self.dim_attr[2])

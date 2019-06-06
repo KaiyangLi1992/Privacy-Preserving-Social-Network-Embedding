@@ -41,7 +41,7 @@ class Model(object):
 
 
 class APGE(Model):
-    def __init__(self, placeholders, num_features, features_nonzero, privacy_attr, **kwargs):
+    def __init__(self, placeholders, num_features, features_nonzero, privacy_attr,dim_attr, **kwargs):
         super(APGE, self).__init__(**kwargs)
 
         self.inputs = placeholders['features']
@@ -51,6 +51,7 @@ class APGE(Model):
         self.dropout = placeholders['dropout']
         self.sample = placeholders['sample']
         self.privacy_attr = privacy_attr
+        self.dim_attr = dim_attr
         self.build()
         
 
@@ -88,9 +89,9 @@ class APGE(Model):
             self.reconstructions = InnerProductDecoder(input_dim=FLAGS.hidden2,
                                           act=lambda x: x,
                                           logging=self.logging)(self.embeddings_concat)
-            self.attr0_logits = tf.layers.dense(inputs=self.embeddings_concat, units=5)
-            self.attr1_logits = tf.layers.dense(inputs=self.embeddings_concat, units=2)
-            self.attr2_logits = dense(self.embeddings_long, 64, 6, name='pri_den')
+            self.attr0_logits = tf.layers.dense(inputs=self.embeddings_concat, units=self.dim_attr[0])
+            self.attr1_logits = tf.layers.dense(inputs=self.embeddings_concat, units=self.dim_attr[1])
+            self.attr2_logits = dense(self.embeddings_long, 64, self.dim_attr[2], name='pri_den')
 def dense(x, n1, n2, name):
     """
     Used to create a dense layer.

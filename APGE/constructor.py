@@ -25,11 +25,11 @@ def get_placeholder(adj):
     return placeholders
 
 
-def get_model(placeholders, num_features, num_nodes, features_nonzero,gender_attr):
+def get_model(placeholders, num_features, num_nodes, features_nonzero,pri_attr,dim_attr):
     discriminator = Discriminator()
     d_real = discriminator.construct(placeholders['real_distribution'])
     model = None
-    model = APGE(placeholders, num_features, features_nonzero,gender_attr)
+    model = APGE(placeholders, num_features, features_nonzero,pri_attr,dim_attr)
     return d_real, discriminator, model
 
 

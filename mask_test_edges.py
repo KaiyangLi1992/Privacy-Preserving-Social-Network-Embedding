@@ -1,3 +1,9 @@
+
+# coding: utf-8
+
+# In[1]:
+
+
 import pickle as pkl
 import scipy.sparse as sp
 import numpy as np
@@ -85,6 +91,10 @@ data = np.ones(train_edges.shape[0])
 adj_train = sp.csr_matrix((data, (train_edges[:, 0], train_edges[:, 1])), shape=adj.shape)
 adj_train = adj_train + adj_train.T
 
+# NOTE: these edge lists only contain single direction of edge!
+
+
+# In[2]:
 
 
 np.save('yale_test_edges.npy',test_edges)

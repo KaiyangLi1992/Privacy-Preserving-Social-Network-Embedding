@@ -6,11 +6,20 @@ from sklearn import metrics
 import numpy as np
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import average_precision_score
-attr_label = np.load( '../data/yale_label_new.npy')
-def get_score(adj_orig,edges_pos, edges_neg, emb=None):
-    if emb is None:
-        feed_dict.update({placeholders['dropout']: 0})
-        emb = sess.run(model.z_mean, feed_dict=feed_dict)
+import tensorflow as tf
+
+
+
+
+def get_score(dataset,adj_orig,edges_pos, edges_neg, emb=None):
+    attr_label = np.load( '../data/{}_label.npy'.format(dataset))
+
+    #In different dataset, we set different utility attribute and private attribute. 
+    #Find the column index corresponding to each attibute.
+    if (dataset == 'yale'):
+        attr_index=[0,1,5]
+    elif (dataset == 'rochester'):
+        attr_index=[0,5,1]
 
     def sigmoid(x):
         return 1 / (1 + np.exp(-x))
@@ -35,7 +44,7 @@ def get_score(adj_orig,edges_pos, edges_neg, emb=None):
     roc_score = roc_auc_score(labels_all, preds_all)
     ap_score = average_precision_score(labels_all, preds_all)
     
-    y = attr_label[:,0]
+    y = attr_label[:,attr_index[0]]
     filter_id = np.where(y==0)
     y = np.delete(y,filter_id,0)
     X_emb_feat0 = np.delete(emb,filter_id,0)
@@ -43,7 +52,7 @@ def get_score(adj_orig,edges_pos, edges_neg, emb=None):
     prec = cross_val_score(clf, X_emb_feat0, y, cv=k_fold,n_jobs=-1)
     p0_mlp = sum(prec)/len(prec)
 
-    y = attr_label[:,1]
+    y = attr_label[:,attr_index[1]]
     filter_id = np.where(y==0)
     y = np.delete(y,filter_id,0)
     X_emb_feat1 = np.delete(emb,filter_id,0)
@@ -51,7 +60,7 @@ def get_score(adj_orig,edges_pos, edges_neg, emb=None):
     prec = cross_val_score(clf, X_emb_feat1, y, cv=k_fold,n_jobs=-1)
     p1_mlp = sum(prec)/len(prec)
     
-    y = attr_label[:,5]
+    y = attr_label[:,attr_index[2]]
     filter_id = np.where(y==0)
     y = np.delete(y,filter_id,0)
     X_emb_feat2 = np.delete(emb,filter_id,0)

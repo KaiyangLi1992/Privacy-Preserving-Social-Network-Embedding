@@ -13,12 +13,12 @@ def sparse_to_tuple(sparse_mx):
 
 
 def load_edges():
-    val_edges = np.load('../data/yale_val_edges.npy')
-    val_edges_false = np.load('../data/yale_val_edges_false.npy')
-    test_edges = np.load('../data/yale_test_edges.npy',)
-    test_edges_false = np.load('../data/yale_test_edges_false.npy')
+    val_edges = np.load('../yale_val_edges.npy')
+    val_edges_false = np.load('../yale_val_edges_false.npy')
+    test_edges = np.load('../yale_test_edges.npy',)
+    test_edges_false = np.load('../yale_test_edges_false.npy')
 
-    with open('../data/yale_adj_train.pkl', 'rb') as handle:
+    with open('../yale_adj_train.pkl', 'rb') as handle:
         adj_train = pkl.load(handle)
     
     return adj_train, val_edges, val_edges_false, test_edges, test_edges_false
