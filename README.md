@@ -33,7 +33,7 @@ In order to use your own data, you have to provide
 
 Here, the i-th row of feature matrix is the concatenation of i-th user’s every attribute one-hot vector. And the element in the i-th row and j-th column of attribute matrix is the label of i-th user's j-th attribute.
 
-And You should use mask_test_edges.py to preprocess adjacency matrix to get test set and validation set.
+And You could use mask_test_edges.py to preprocess adjacency matrix to get test set and validation set.
 
 
 ## Models
