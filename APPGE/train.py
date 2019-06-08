@@ -19,7 +19,7 @@ from optimizer import OptimizerAE
 
 # Train on CPU (hide GPU) due to memory constraints
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = "2"
+os.environ['CUDA_VISIBLE_DEVICES'] = "0"
 
 
 def del_all_flags(FLAGS):
