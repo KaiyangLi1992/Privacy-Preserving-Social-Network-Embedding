@@ -18,7 +18,7 @@ from preprocessing import load_edges,preprocess_graph,sparse_to_tuple,construct_
 
 # Train on CPU (hide GPU) due to memory constraints
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = "2"
+os.environ['CUDA_VISIBLE_DEVICES'] = "0"
 
 
 
