@@ -148,7 +148,7 @@ print("Optimization Finished!")
 # Compute score of test set 
 # Save embedding result 
 roc_score,ap_score,p0_mlp,p1_mlp,p2_lr,p2_svm,p2_mlp = get_score(FLAGS.dataset,adj_orig,test_edges,test_edges_false,emb)
-np.save('../data/APGE_{}_embedding.npy'.format(FLAGS.dataset),emb)
+np.save('./data/APGE_{}_embedding.npy'.format(FLAGS.dataset),emb)
 print('Test Link ROC: ' + str(roc_score) +'\n')
 print('Test Link AP: ' + str(ap_score)+'\n')
 print('Attr0 MLP: ' + str(p0_mlp)+'\n')
