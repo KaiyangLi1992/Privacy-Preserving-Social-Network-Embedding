@@ -1,13 +1,13 @@
-# Embedd yale with APGE
+# Embed yale with APGE
 python ./APGE/train.py -dataset yale
-# Embedd yale with ADPGE
+# Embed yale with ADPGE
 #python ./ADPGE/train.py -dataset yale
-# Embedd yale with APPGE
+# Embed yale with APPGE
 #python ./APPGE/train.py -dataset yale
-# Embedd rochester with APGE
+# Embed rochester with APGE
 #python ./APGE/train.py -dataset rochester -epochs 1000 -hidden2 8
-# Embedd rochester with ADPGE
+# Embed rochester with ADPGE
 #python ./ADPGE/train.py -dataset rochester -epochs 1000 -hidden2 8
-# Embedd rochester with APPGE
+# Embed rochester with APPGE
 #python ./APPGE/train.py -dataset rochester -epochs 5000 -hidden2 8
 
