@@ -12,7 +12,7 @@ import tensorflow as tf
 
 
 def get_score(dataset,adj_orig,edges_pos, edges_neg, emb=None):
-    attr_label = np.load( '../data/{}_label.npy'.format(dataset))
+    attr_label = np.load( './data/{}_label.npy'.format(dataset))
 
     #In different dataset, we set different utility attribute and private attribute. 
     #Find the column index corresponding to each attibute.
