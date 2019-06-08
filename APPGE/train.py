@@ -217,7 +217,7 @@ print("Optimization Finished!")
 # Save embedding result 
 z_embedding = sess.run(model.embeddings, feed_dict=feed_dict)
 roc_score,ap_score,p0_mlp,p1_mlp,p2_lr,p2_svm,p2_mlp = get_score(FLAGS.dataset,adj_orig,test_edges, test_edges_false,z_embedding)
-np.save('../data/APPGE_{}_embedding.npy'.format(FLAGS.dataset),z_embedding)
+np.save('./data/APPGE_{}_embedding.npy'.format(FLAGS.dataset),z_embedding)
 print('Test Results')
 print('Test Link ROC: ' + str(roc_score) +'\n')
 print('Test Link AP: ' + str(ap_score)+'\n')
