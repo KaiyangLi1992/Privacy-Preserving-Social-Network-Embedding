@@ -38,12 +38,8 @@ flags.DEFINE_string('dataset', 'rochester', 'Name of dateset')
 flags.DEFINE_float('learning_rate', 0.01, 'Initial learning rate.')
 flags.DEFINE_integer('hidden1', 128, 'Number of units in GCN layer 1.')
 flags.DEFINE_integer('hidden2', 64, 'Number of units in GCN layer 2.')
+flags.DEFINE_integer('epochs', 2000, 'Number of iterations.')
 
-
-if FLAGS.dataset=='yale':
-    flags.DEFINE_integer('epochs', 2000, 'Number of iterations.')
-elif FLAGS.dataset=='rochester':
-    flags.DEFINE_integer('epochs', 5000, 'Number of iterations.')
 
 
 
@@ -175,8 +171,8 @@ for epoch in range(FLAGS.epochs):
         feed_dict = construct_feed_dict(adj_norm, adj_label, features_sp, placeholders)
         feed_dict.update({placeholders['sample']: sampled_id})
         
-        outs_A = sess.run([opt_A.A_opt_op, 
-                           opt_A.A_cost], feed_dict=feed_dict)
+        outs_O = sess.run([opt_O.O_opt_op, 
+                           opt_O.O_cost], feed_dict=feed_dict)
 
 
 
@@ -191,8 +187,8 @@ for epoch in range(FLAGS.epochs):
         # Construct feed dictionary
         feed_dict = construct_feed_dict(adj_norm, adj_label, features_sp, placeholders)
         feed_dict.update({placeholders['sample']: sampled_id})
-        outs_O = sess.run([opt_O.O_opt_op, 
-                           opt_O.O_cost], feed_dict=feed_dict)
+        outs_A = sess.run([opt_A.A_opt_op, 
+                           opt_A.A_cost], feed_dict=feed_dict)
         
     # Compute score of validation set   
     if (epoch+1)%200 ==0:
