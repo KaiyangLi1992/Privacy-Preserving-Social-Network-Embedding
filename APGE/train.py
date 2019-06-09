@@ -41,14 +41,9 @@ flags.DEFINE_integer('hidden1', 128, 'Number of units in GCN layer 1.')
 flags.DEFINE_integer('hidden3', 32, 'Number of units in discriminator layer 1.')
 flags.DEFINE_integer('hidden4', 16, 'Number of units in discriminator layer 2.')
 flags.DEFINE_float('dropout', 0., 'Dropout rate (1 - keep probability).')
+flags.DEFINE_integer('hidden2', 16, 'Number of units in GCN layer 2.')
+flags.DEFINE_integer('epochs', 600, 'Number of iterations.')
 
-
-if FLAGS.dataset=='yale':
-    flags.DEFINE_integer('hidden2', 16, 'Number of units in GCN layer 2.')
-    flags.DEFINE_integer('epochs', 600, 'Number of iterations.')
-elif FLAGS.dataset=='rochester':
-    flags.DEFINE_integer('hidden2', 8, 'Number of units in GCN layer 2.')
-    flags.DEFINE_integer('epochs', 1000, 'Number of iterations.')
 
 
 # Load data
