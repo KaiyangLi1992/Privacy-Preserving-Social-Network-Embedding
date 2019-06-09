@@ -198,7 +198,7 @@ for epoch in range(FLAGS.epochs):
     if (epoch+1)%200 ==0:
         z_embedding = sess.run(model.embeddings, feed_dict=feed_dict)
         roc_score,ap_score,p0_mlp,p1_mlp,p2_lr,p2_svm,p2_mlp = get_score(FLAGS.dataset,adj_orig,val_edges, val_edges_false,z_embedding)
-        print('Epoch:' + str(epoch))
+        print('Epoch:' + str(epoch+1))
         print('Val Link ROC: ' + str(roc_score) +'\n')
         print('Val Link AP: ' + str(ap_score)+'\n')
         print('Attr0 MLP: ' + str(p0_mlp)+'\n')
