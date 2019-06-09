@@ -26,9 +26,9 @@ Shirui Pan .et al, Adversarially Regularized Graph Autoencoder for Graph Embeddi
 ## Data
 
 In order to use your own data, you have to provide 
-* an N by N adjacency matrix (N is the number of nodes), 
-* an N by D feature matrix (D is the number of features per node)
-* an N by M attribute matrix (M is the number of attibutes per node)
+* an N by N adjacency matrix (N is the number of nodes), such as ./data/yale_adj.pkl
+* an N by D feature matrix (D is the number of features per node), such as ./data/yale_feats.pkl
+* an N by M attribute matrix (M is the number of attibutes per node), such as ./data/yale_label.npy
 
 Here, the i-th row of feature matrix is the concatenation of i-th user’s every attribute one-hot vector. And the element in the i-th row and j-th column of attribute matrix is the label of i-th user's j-th attribute.
 
