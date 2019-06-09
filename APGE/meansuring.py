@@ -12,6 +12,7 @@ import tensorflow as tf
 
 
 def get_score(dataset,adj_orig,edges_pos, edges_neg, emb=None):
+    #load attribute matrix 
     attr_label = np.load( './data/{}_label.npy'.format(dataset))
 
     #In different dataset, we set different utility attribute and private attribute. 
