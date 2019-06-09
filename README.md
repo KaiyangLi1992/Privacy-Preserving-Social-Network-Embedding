@@ -26,7 +26,7 @@ Shirui Pan .et al, Adversarially Regularized Graph Autoencoder for Graph Embeddi
 ## Data
 
 In order to use your own data, you have to provide 
-* an N by N adjacency matrix (N is the number of nodes), and
+* an N by N adjacency matrix (N is the number of nodes), 
 * an N by D feature matrix (D is the number of features per node)
 * an N by M attribute matrix (M is the number of attibutes per node)
 
