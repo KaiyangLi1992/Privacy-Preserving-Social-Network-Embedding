@@ -9,5 +9,5 @@ python ./APGE/train.py -dataset yale
 # Embed rochester with ADPGE
 #python ./ADPGE/train.py -dataset rochester -epochs 1000 -hidden2 8
 # Embed rochester with APPGE
-#python ./APPGE/train.py -dataset rochester -epochs 5000 -hidden2 8
+#python ./APPGE/train.py -dataset rochester -epochs 5000 
 
