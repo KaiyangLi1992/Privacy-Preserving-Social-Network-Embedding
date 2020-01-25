@@ -17,12 +17,13 @@ We borrowed part of code from T. N. Kipf, M. Welling, Variational Graph Auto-Enc
 
 ## Run the demo
 
-``~
+
 ########train the model and predict utility and private attribute ###################
 python train.py -dataset yale
 ##################predict linkage######################
 python link_predict.py -dataset yale 
-```
+
+
 
 ## Data
 
