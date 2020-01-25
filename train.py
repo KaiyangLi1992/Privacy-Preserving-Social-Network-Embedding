@@ -47,7 +47,7 @@ flags.DEFINE_float('dropout', 0., 'Dropout rate (1 - keep probability).')
 
     
 if FLAGS.dataset=='yale':
-    flags.DEFINE_integer('epochs', 50, 'Number of iterations.')
+    flags.DEFINE_integer('epochs', 500, 'Number of iterations.')
     flags.DEFINE_integer('hidden2', 16, 'Number of units in GCN layer 2.')
     flags.DEFINE_integer('pri_weight', 1,'weight of privacy')
     flags.DEFINE_integer('uti_attr_weight', 10,'weight of utility_attr')
