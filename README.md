@@ -3,15 +3,13 @@ Adversarial Privacy Graph Embedding (APGE)
 
 This is a TensorFlow implementation of the Adversarial Privacy Graph Embedding (APGE) model as described in our paper.
 
-We borrowed part of code from T. N. Kipf, M. Welling, Variational Graph Auto-Encoders [https://github.com/tkipf/gae] and 
-Shirui Pan .et al, Adversarially Regularized Graph Autoencoder for Graph Embedding [https://github.com/Ruiqi-Hu/ARGA].
+We borrowed part of code from T. N. Kipf, M. Welling, Variational Graph Auto-Encoders [https://github.com/tkipf/gae].
 
 
 
 ## Requirements
 * TensorFlow (1.8.0 or later)
 * python 3.5
-* networkx
 * scikit-learn
 * scipy
 * numpy
@@ -19,8 +17,11 @@ Shirui Pan .et al, Adversarially Regularized Graph Autoencoder for Graph Embeddi
 
 ## Run the demo
 
-```bash
-./run.sh
+``~
+########train the model and predict utility and private attribute ###################
+python train.py -dataset yale
+##################predict linkage######################
+python link_predict.py -dataset yale 
 ```
 
 ## Data
@@ -32,13 +33,12 @@ In order to use your own data, you have to provide
 
 Here, the i-th row of feature matrix is the concatenation of i-th user’s every attribute one-hot vector. And the element in the i-th row and j-th column of attribute matrix is the label of i-th user's j-th attribute.
 
+In yale_feats.pkl, elements in columns 0 - 4 correspond to the utility attribute student/faculty status, and elements in the bottom 6 columns correspond to class year, which is privacy here. 
+In rochester.pkl, elements in the bottom 19 columns correspond to the utility attribute class year, and elements in the 6,7 columns correspond to gender, which is privacy here.
+In yale_label.npy, elements in the first cloumn  correspond to student/faculty status, and elements in the last column correspond to class year.
+In rochester_label.npy, elements in the last cloumn  correspond to student/faculty status, and elements in the seconed column correspond to gender.
+
 And You could use mask_test_edges.py to preprocess adjacency matrix to get test set and validation set.
 
 
-## Models
-
-You can choose between the following models: 
-* `APGE`: Adversarial Privacy Graph Embedding
-* `ADPGE`: Adversarial Privacy-Disentangled Graph Embedding
-* `APPGE`: Adversarially Privacy-Purged Variational Graph Auto-Encoder 
 
