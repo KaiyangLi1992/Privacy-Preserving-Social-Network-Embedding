@@ -20,12 +20,12 @@ We borrowed part of code from T. N. Kipf, M. Welling, Variational Graph Auto-Enc
 
 train the model and predict utility and private attribute
 ```
-python train.py -dataset yale
+python train.py -dataset rochester
 ```
 
 predict linkage
 ```
-python link_predict.py -dataset yale 
+python link_predict.py -dataset rochester
 ```
 
 
