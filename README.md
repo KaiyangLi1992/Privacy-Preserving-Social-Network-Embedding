@@ -8,7 +8,7 @@ We borrowed part of code from T. N. Kipf, M. Welling, Variational Graph Auto-Enc
 
 
 ## Requirements
-* TensorFlow (1.8.0 or later)
+* TensorFlow (2.20 or later)
 * python 3.5
 * scikit-learn
 * scipy
