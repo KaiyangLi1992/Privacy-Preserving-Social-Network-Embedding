@@ -5,9 +5,9 @@ This is a TensorFlow implementation of the Adversarial Privacy Graph Embedding (
 
 We borrowed part of code from T. N. Kipf, M. Welling, Variational Graph Auto-Encoders [https://github.com/tkipf/gae].
 
-<div style="text-align: center">
-<img width="500"  src=figure.png/>
-</div>
+ <p align =“center”>
+<image  src=figure.png width=500 />
+ </p>
 
 
 ## Requirements
