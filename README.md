@@ -6,8 +6,28 @@ This is a TensorFlow implementation of the Adversarial Privacy Graph Embedding (
 We borrowed part of code from T. N. Kipf, M. Welling, Variational Graph Auto-Encoders [https://github.com/tkipf/gae].
 
  <p align =“center”>
-<image  src=figure.png width=500 />
+    <image  src=figure.png width=500 />
  </p>
+
+## idea
+
+In this work, we propose the privacy-preserving approach against inference attack which is the adversary try to infer privacy information based on released data. Like traditional works defending inference attack, we regard the sensitive attributes as privacy (i.e., sexual orientation, political opinion)[1-3]. That is, we want the graph embedding contains the information of the sensitive attributes as little as possible. Since most of the private information is removed from graph embedding, our approach is suit to defend all kinds of inference attack launched on graph embedding.
+
+
+%In our paper, we propose two mechanisms disentanglement and purging to extrude the private information. To evaluate the performance of preserving privacy, we train MLP/SVM to predict sensitive attributes. Indeed, it is not a very sound approach, because we cannot test all possible models. But in the classical works against inference attack, authors always use this approach to evaluate the preserving privacy model [1][2].  We have assumed attackers leverage other classifier launch attacks such as logistic regression, KNN, and random frost. In these cases, APGE significantly outperforms baselines in these classifiers too. Because of the lack of space, we do not show the results in the paper.
+
+[1] Zhipeng Cai, Zaobo He, Xin Guan, and Yingshu Li. Collective data-sanitization for preventing sensitive information inference attacks in social networks. IEEE Transactions on Dependable and Secure Computing, 15(4):577–590, 2018.
+
+[2]Jinyuan Jia and Neil Zhenqiang Gong. Attriguard: A practical defense against attribute inference attacks via adversarial machine learning. USENIX Security 18, pages 513–529, 2018.
+
+[3] Ahmadinejad S H, Fong P W L. Unintended disclosure of information: Inference attacks by third-party extensions to Social Network Systems[J]. Computers \& security, 2014, 44: 75-91.
+
+
+We introduce a "disentanglement" work supervised AAE in the last paragraph of Sec. 2.2. The supervised AAE inspires us to propose APDGE. 
+
+
+
+
 
 
 ## Requirements
